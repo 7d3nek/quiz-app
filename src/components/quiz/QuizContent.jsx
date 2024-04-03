@@ -17,6 +17,9 @@ export default function QuizContent({ url }) {
     const { data, isPending, isError, isSuccess } = useQuery({
        queryKey: ["quizQuestions"],
        queryFn: () => fetch(url).then(res => {
+        if (!res.ok) {
+            throw new Error();
+        }
         setAllowedToFetch(false);
         return res.json();
        }),
